@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class Question extends StatelessWidget {
   final String questionText;
   Question({
-    required this.questionText,
-    Key? key,
+    @required this.questionText,
+    Key key,
   }) : super(key: key);
 
   @override
@@ -13,8 +13,8 @@ class Question extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.all(10),
       child: Text(
-        textAlign: TextAlign.center,
         questionText,
+        textAlign: TextAlign.center,
         style: TextStyle(fontSize: 25),
       ),
     );
