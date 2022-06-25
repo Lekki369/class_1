@@ -3,6 +3,7 @@
 import 'package:flutter_complete_guide/quiz.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/result.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,8 +14,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _questionsIndex = 0;
+  int _totalScore = 0;
 
-  void _answerQuestion() {
+  void _reset() {
+    setState(() {
+      _questionsIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
       _questionsIndex++;
     });
@@ -26,25 +36,43 @@ class _MyAppState extends State<MyApp> {
     List<Map<String, dynamic>> questions = [
       {
         'questionText': 'What\'s Your Favourite Color',
-        'answer': ['Black', 'Red', 'Blue', 'Orange', 'White']
+        'answer': [
+          {'text': 'Black', 'score': 5},
+          {'text': 'Red', 'score': 3},
+          {'text': 'Blue', 'score': 4},
+          {'text': 'Orange', 'score': 6},
+          {'text': 'White', 'score': 5},
+        ]
       },
       {
         'questionText': 'What\'s Your Favourite Animal',
-        'answer': ['Bear', 'Tiger', 'Lion', 'Eagle', 'Orcas']
+        'answer': [
+          {'text': 'Bear', 'score': 4},
+          {'text': 'Tiger', 'score': 5},
+          {'text': 'Lion', 'score': 4},
+          {'text': 'Eagle', 'score': 5},
+          {'text': 'Orca', 'score': 4}
+        ]
       },
       {
         'questionText': 'What\'s Your Favourite Food',
         'answer': [
-          'Rice and Bean',
-          'Yam and Egg',
-          'Pounded Yam and Egusi',
-          'Bread and Tea ',
-          'Bread and Egg'
+          {'text': 'Rice and Bean', 'score': 11},
+          {'text': 'Yam and Egg', 'score': 9},
+          {'text': 'Pounded Yam and Egusi', 'score': 16},
+          {'text': 'Bread and Tea', 'score': 11},
+          {'text': 'Bread and Egg', 'score': 11},
         ]
       },
       {
         'questionText': 'What\'s Your Favourite State',
-        'answer': ['Lagos', 'Abuja', 'Kano', 'Delta', 'Calabar']
+        'answer': [
+          {'text': 'Lagos', 'score': 6},
+          {'text': 'Abuja', 'score': 7},
+          {'text': 'Kano', 'score': 5},
+          {'text': 'Delta', 'score': 6},
+          {'text': 'Calabar', 'score': 9},
+        ]
       },
     ];
 
@@ -57,12 +85,9 @@ class _MyAppState extends State<MyApp> {
                 answer: questions[_questionsIndex]['answer'],
                 answerQuestion: _answerQuestion,
               )
-            : Center(
-                child: Text(
-                  'Done',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25),
-                ),
+            : Result(
+                resultScore: _totalScore,
+                ressetter: _reset,
               ),
       ),
     );
